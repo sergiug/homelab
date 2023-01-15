@@ -1,0 +1,6 @@
+---
+
+- name: Create external network
+  community.docker.docker_network:
+    name: homelab
+    internal: false

@@ -1,0 +1,26 @@
+---
+- include_tasks: clean-up.yaml
+
+- include_tasks: install.yaml
+
+- include_tasks: admin.yaml
+  when: admin_user and admin_password is defined
+
+- name: Generate authentication token
+  uri:
+    url: "{{ portainer_endpoint }}/auth"
+    method: POST
+    return_content: true
+    body_format: json
+    body: '{"Username": "{{ admin_user }}", "Password": "{{ admin_password }}"}'
+  register: auth_token
+  when: admin_user and admin_password is defined
+
+- include_tasks: endpoints.yaml
+  when: endpoints is not none
+
+- include_tasks: settings.yaml
+  when: configure_settings
+
+- include_tasks: registry.yaml
+  when: configure_registry

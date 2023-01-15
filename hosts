@@ -1,0 +1,6 @@
+[all:vars]
+ansible_connection=ssh
+ansible_user=sergiu
+
+[homelab]
+10.10.1.190

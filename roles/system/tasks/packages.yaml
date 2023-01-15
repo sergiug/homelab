@@ -1,0 +1,4 @@
+- name: Install extra packages
+  package:
+    name: "{{ extra_packages }}"
+    state: present

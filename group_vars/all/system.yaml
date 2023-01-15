@@ -1,0 +1,9 @@
+# Packages
+timezone: Europe/Bucharest
+
+extra_packages:
+  - htop
+  - git
+  - rsync
+  - python3
+  - python3-pip

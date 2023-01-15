@@ -1,0 +1,28 @@
+---
+
+- name: Restart portainer
+  command: docker restart portainer
+
+- set_fact:
+    portainer_is_running: "{{ portainer_docker.container.State.Running }}"
+
+- set_fact:
+    portainer_endpoint: "http://{{ portainer_docker.container.NetworkSettings.IPAddress }}:{{ host_port }}/api"
+
+- name: "Check!!!"
+  debug:
+    msg: "{{ portainer_is_running }} // {{ portainer_endpoint }}"
+
+- name: Check container status
+  fail:
+    msg: "Portainer did not start: {{ portainer_is_running }}"
+  when: not portainer_is_running
+
+- name: Configure admin user password
+  uri:
+    url: "{{ portainer_endpoint }}/users/admin/init"
+    method: POST
+    return_content: true
+    body_format: json
+    body: '{ "Username":"{{ admin_user }}", "Password":"{{ admin_password }}"}'
+    status_code: 200, 409

@@ -1,0 +1,119 @@
+---
+- name: Ensure old versions of Docker are not installed.
+  package:
+    name:
+      - docker
+      - docker-engine
+    state: absent
+
+- name: Ensure dependencies are installed.
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+    state: present
+
+- name: Ensure additional dependencies are installed.
+  apt:
+    name: gnupg2
+    state: present
+
+- name: Add Docker apt key.
+  ansible.builtin.get_url:
+    url: "{{ docker_apt_gpg_key }}"
+    dest: /etc/apt/trusted.gpg.d/docker.asc
+    mode: '0644'
+    force: true
+  register: add_repository_key
+  ignore_errors: true
+
+- name: Add Docker repository.
+  apt_repository:
+    repo: "{{ docker_apt_repository }}"
+    state: present
+    update_cache: true
+
+- name: Install Docker packages (with downgrade option).
+  package:
+    name: "{{ docker_packages }}"
+    state: present
+    allow_downgrade: true
+  notify: restart docker
+  ignore_errors: true
+
+- name: Install docker-compose-plugin (with downgrade option).
+  package:
+    name: "{{ docker_compose_package }}"
+    state: present
+    allow_downgrade: true
+  notify: restart docker
+  ignore_errors: true
+
+- name: Ensure /etc/docker/ directory exists.
+  file:
+    path: /etc/docker
+    state: directory
+    mode: 0755
+  when: docker_daemon_options.keys() | length > 0
+
+- name: Configure Docker daemon options.
+  copy:
+    content: "{{ docker_daemon_options | to_nice_json }}"
+    dest: /etc/docker/daemon.json
+    mode: 0644
+  when: docker_daemon_options.keys() | length > 0
+  notify: restart docker
+
+- name: Ensure Docker is started and enabled at boot.
+  service:
+    name: docker
+    state: started
+    enabled: "{{ docker_service_enabled }}"
+  ignore_errors: "{{ ansible_check_mode }}"
+  when: docker_service_manage | bool
+
+- name: Check current docker-compose version.
+  command: "{{ docker_compose_path }} --version"
+  register: docker_compose_vsn
+  check_mode: false
+  changed_when: false
+  failed_when: false
+
+- set_fact:
+    docker_compose_current_version: "{{ docker_compose_vsn.stdout | regex_search('(\\d+(\\.\\d+)+)') }}"
+  when: >
+    docker_compose_vsn.stdout is defined
+    and (docker_compose_vsn.stdout | length > 0)
+
+- name: Delete existing docker-compose version if it's different.
+  file:
+    path: "{{ docker_compose_path }}"
+    state: absent
+  when: >
+    docker_compose_current_version is defined
+    and (docker_compose_version | regex_replace('v', '')) not in docker_compose_current_version
+
+- name: Install Docker Compose (if configured).
+  get_url:
+    url: "{{ docker_compose_url }}"
+    dest: "{{ docker_compose_path }}"
+    mode: 0755
+  when: >
+    (docker_compose_current_version is not defined)
+    or (docker_compose_current_version | length == 0)
+    or (docker_compose_current_version is version((docker_compose_version | regex_replace('v', '')), '<'))
+
+- name: Ensure user is added to the docker group.
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: true
+
+- name: Install docker module for Python
+  pip:
+    name: 
+      - docker
+      - docker-compose
+
+- name: Ensure docker projects folder exists
+  file: path={{ docker_dir }} state=directory
