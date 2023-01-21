@@ -102,7 +102,7 @@
 
 - name: Ensure user is added to the docker group.
   user:
-    name: "{{ user }}"
+    name: "{{ ansible_user }}"
     groups: docker
     append: true
 

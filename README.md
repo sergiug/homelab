@@ -12,15 +12,13 @@ Everything running in docker containers.
 * SSH key imported (I personally use github import right at installation time)
 
 ### Host machine
-* Ansible installed
-* paramiko installed (`pip install paramiko`)
+We are running Ansible in a docker container, to be able to run from any host, so only prerequisite required on the host is Docker installed.
+* Docker
 
 
 ## Configuration
-1. Customize hosts file according to your homelab server(s) names, IPs and username
-2. Rename `/group_vars/all/secret.yaml.dist` file to `/group_vars/all/secret.yaml` and fill in with your details
-3. Install community.docker ansible module 
-`ansible-galaxy collection install community.docker`
+1. Rename `hosts.dist` to `hosts` and fill in with your details, server IPs, etc..
+2. 
 
 ## Running the linting tools
 `make lint`
