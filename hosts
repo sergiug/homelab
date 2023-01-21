@@ -1,6 +1,0 @@
-[all:vars]
-ansible_connection=paramiko
-ansible_user=sergiu
-
-[homelab]
-10.10.1.124

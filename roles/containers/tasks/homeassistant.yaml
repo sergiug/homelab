@@ -5,7 +5,7 @@
   register: folder_data
 
 - name: Create the folder if it doesn't exist
-  file: 
+  file:
     path: "{{ docker_dir }}/homeassistant/"
     state: directory
     mode: 0755

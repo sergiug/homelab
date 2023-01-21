@@ -1,0 +1,19 @@
+[all:vars]
+# Ansible
+ansible_connection=paramiko
+ansible_user=YourOSUser
+ansible_become_pass=YourSudoPasswordOfTheOSUser
+ansible_ssh_pass=YourSSHKEYPassword
+
+# Portainer
+portainer_user=YourPortainerUserHere
+portainer_password=YourPortainerPasswordHere
+
+# WIFI
+wifi_ssid=YourWifiSsid
+wifi_password=YourWifiPassword
+
+
+[homelab]
+# List all IP of the homelab servers here
+10.10.1.124

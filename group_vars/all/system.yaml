@@ -2,6 +2,7 @@
 timezone: Europe/Bucharest
 
 extra_packages:
+  - unzip
   - htop
   - git
   - rsync
