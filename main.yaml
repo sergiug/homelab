@@ -1,19 +1,20 @@
 ---
-# This Playbook would setup the homelab server
+# This Playbook will set up the homelab servers
 
-- hosts: homelab
-  become: yes
+- name: Defining the hosts from the inventory
+  hosts: homelab
+  become: true
 
   roles:
   # System setup
       - role: system
         tags:
             - system
-      
+
       - role: docker
         tags:
             - docker
-      
+
       - role: portainer
         tags:
             - portainer

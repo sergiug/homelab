@@ -2,11 +2,14 @@
 
 - name: Restart portainer
   command: docker restart portainer
+  changed_when: false
 
-- set_fact:
+- name: Set Portainer running state variable
+  set_fact:
     portainer_is_running: "{{ portainer_docker.container.State.Running }}"
 
-- set_fact:
+- name: Set Portainer endpoint variable
+  set_fact:
     portainer_endpoint: "http://{{ portainer_docker.container.NetworkSettings.IPAddress }}:{{ host_port }}/api"
 
 - name: "Check!!!"

@@ -3,5 +3,5 @@
   service:
     name: docker
     state: restarted
-  ignore_errors: true
+  failed_when: false
   when: docker_service_manage | bool

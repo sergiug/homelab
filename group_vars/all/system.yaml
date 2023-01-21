@@ -7,3 +7,4 @@ extra_packages:
   - rsync
   - python3
   - python3-pip
+  - network-manager

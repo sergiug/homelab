@@ -1,5 +1,6 @@
 ---
-- name: "Deploy Portainer to {{ inventory_hostname }}"
+
+- name: Deploy Portainer
   community.docker.docker_container:
     name: "{{ container_name }}"
     image: "{{ container_image }}"
@@ -10,20 +11,22 @@
     restart_policy: "{{ container_restart_policy }}"
     links: "{{ container_links | default(omit) }}"
     networks: "{{ container_network | default(omit, True) }}"
-    networks_cli_compatible: no # avoid ansible 2.12. Deprecation warning
+    networks_cli_compatible: false # avoid ansible 2.12. Deprecation warning
     published_ports: "{{ container_ports | default(omit, True) }}"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - "{{ persistent_data_path }}"
   register: portainer_docker
 
-- set_fact:
+- name: Set Portainer running state variable
+  set_fact:
     portainer_is_running: "{{ portainer_docker.container.State.Running }}"
 
-- set_fact:
+- name: Set Portainer endpoint variable
+  set_fact:
     portainer_endpoint: "http://{{ portainer_docker.container.NetworkSettings.IPAddress }}:{{ host_port }}/api"
 
-- name: "Check!!!"
+- name: Display status
   debug:
     msg: "{{ portainer_is_running }} // {{ portainer_endpoint }}"
 

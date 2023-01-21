@@ -1,3 +1,7 @@
 ---
- - include_tasks: networks.yaml
- - include_tasks: homeassistant.yaml
+
+- name: Setup Docker networks
+  include_tasks: networks.yaml
+
+- name: Setup and spin up Home Assistant containers
+  include_tasks: homeassistant.yaml

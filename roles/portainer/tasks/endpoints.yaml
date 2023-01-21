@@ -5,20 +5,21 @@
     method: GET
     return_content: true
     headers:
-      Authorization: Bearer {{ (auth_token.content|from_json).jwt }}
+      Authorization: Bearer {{ (auth_token.content | from_json).jwt }}
   register: portainer_known_endpoints_raw
 
 - name: Save endpoints as fact
   set_fact:
     portainer_known_endpoints: "{{ portainer_known_endpoints_raw.json | map(attribute='Name') | list }}"
 
-- name: "Show known endpoints"
-  debug: msg="{{ portainer_known_endpoints }}"
+- name: Show known endpoints
+  debug:
+    msg: "{{ portainer_known_endpoints }}"
 
 - name: Define Endpoints
   shell: |
     curl --silent --show-error -o - {{ portainer_endpoint }}/endpoints \
-      -H "Authorization: Bearer {{ (auth_token.content|from_json).jwt }}" \
+      -H "Authorization: Bearer {{ (auth_token.content | from_json).jwt }}" \
       -F "Name={{ item.name }}" \
       -F "URL={{ item.url }}" \
       -F "EndpointCreationType=1"
@@ -37,6 +38,6 @@
 - name: Verifying calls
   fail:
     msg: "Could not add endpoint: {{ item.item.name }}"
-  when: item.stdout is defined and (item.stdout|from_json).err is defined
+  when: item.stdout is defined and (item.stdout | from_json).err is defined
   with_items:
     - "{{ response.results }}"

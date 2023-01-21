@@ -20,9 +20,9 @@
         regexp: '^(.*)PermitRootLogin'
         line: "PermitRootLogin without-password"
         state: present
-        backup: yes
+        backup: true
   notify:
-    - restart ssh
+        - restart ssh
 
 - name: Disable password authentication
   lineinfile:
@@ -30,7 +30,6 @@
         regexp: '^(.*)PasswordAuthentication'
         line: "PasswordAuthentication no"
         state: present
-        backup: yes
+        backup: true
   notify:
-    - restart ssh
-
+        - restart ssh

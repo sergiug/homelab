@@ -1,5 +1,12 @@
 ---
-- include_tasks: ssh.yaml
-- include_tasks: system.yaml
-- include_tasks: packages.yaml
-- include_tasks: network.yaml
+- name: SSH setup
+  include_tasks: ssh.yaml
+
+- name: System Setup
+  include_tasks: system.yaml
+
+- name: Install and update OS packages
+  include_tasks: packages.yaml
+
+- name: Network setup
+  include_tasks: network.yaml

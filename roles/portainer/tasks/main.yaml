@@ -1,9 +1,12 @@
 ---
-- include_tasks: clean-up.yaml
+- name: Clean up tasks
+  include_tasks: clean-up.yaml
 
-- include_tasks: install.yaml
+- name: Install Portainer
+  include_tasks: install.yaml
 
-- include_tasks: admin.yaml
+- name: Setup admin
+  include_tasks: admin.yaml
   when: admin_user and admin_password is defined
 
 - name: Generate authentication token
@@ -16,11 +19,14 @@
   register: auth_token
   when: admin_user and admin_password is defined
 
-- include_tasks: endpoints.yaml
+- name: Setup application endpoins
+  include_tasks: endpoints.yaml
   when: endpoints is not none
 
-- include_tasks: settings.yaml
+- name: Configure Portainer settings
+  include_tasks: settings.yaml
   when: configure_settings
 
-- include_tasks: registry.yaml
+- name: Configure Registry
+  include_tasks: registry.yaml
   when: configure_registry
