@@ -6,6 +6,15 @@ Ansible provisioning for an Ubuntu homelab server featuring:
 
 Everything running in docker containers.
 
+It performs the following steps:
+* SSH security improvements
+* OS package updates and upgrades
+* OS extra package install
+* Network setup (WiFi connection setup)
+* Docker and Docker Compose install and setup
+* Portainer install and setup
+* Home Assistant install and setup
+
 ## Prerequisites
 ### Homelab server(s)
 * Ubuntu 22 server installed
