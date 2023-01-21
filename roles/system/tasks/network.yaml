@@ -1,0 +1,13 @@
+---
+- name: Check if wifi device exists and exit if not
+  shell: /usr/bin/nmcli device status | grep wifi
+  register: nmcli_result
+  ignore_errors: False
+
+- name: Enable wifi connection
+  shell: /usr/bin/nmcli radio wifi on
+  ignore_errors: True
+
+- name: Assign wifi device name to variable
+  shell: /usr/bin/nmcli dev wifi connect {{ wifi_ssid }} password {{ wifi_password }}
+  ignore_errors: False

@@ -2,3 +2,4 @@
 - include_tasks: ssh.yaml
 - include_tasks: system.yaml
 - include_tasks: packages.yaml
+- include_tasks: network.yaml

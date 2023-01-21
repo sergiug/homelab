@@ -33,19 +33,17 @@
     state: present
     update_cache: true
 
-- name: Install Docker packages (with downgrade option).
+- name: Install Docker packages.
   package:
     name: "{{ docker_packages }}"
     state: present
-    allow_downgrade: true
   notify: restart docker
   ignore_errors: true
 
-- name: Install docker-compose-plugin (with downgrade option).
+- name: Install docker-compose-plugin.
   package:
     name: "{{ docker_compose_package }}"
     state: present
-    allow_downgrade: true
   notify: restart docker
   ignore_errors: true
 
