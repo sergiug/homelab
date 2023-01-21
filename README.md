@@ -22,7 +22,13 @@ Everything running in docker containers.
 3. Install community.docker ansible module 
 `ansible-galaxy collection install community.docker`
 
-## Run playbook
-`ansible-playbook -i hosts main.yaml -kK`
+## Running the linting tools
+`make lint`
+
+## Checking the playbook (running in dry mode)
+`make check`
+
+## Running the playbook
+`make play`
 
 Sit back and enjoy the homelab server being set up.
