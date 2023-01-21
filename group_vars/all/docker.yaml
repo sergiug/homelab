@@ -1,5 +1,5 @@
 ---
-docker_dir: "/home/{{user}}/docker"
+docker_dir: "/home/{{ansible_user}}/docker"
 
 docker_packages:
   - "docker-ce"
