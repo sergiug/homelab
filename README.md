@@ -13,11 +13,11 @@ Everything running in docker containers.
 
 ### Host machine
 * Ansible installed
-* sshpass installed (`sudo apt-get install sshpass`)
+* paramiko installed (`pip install paramiko`)
 
 
 ## Configuration
-1. Customize hosts file according to your homelab server(s) names and IPs
+1. Customize hosts file according to your homelab server(s) names, IPs and username
 2. Rename `/group_vars/all/secret.yaml.dist` file to `/group_vars/all/secret.yaml` and fill in with your details
 3. Install community.docker ansible module 
 `ansible-galaxy collection install community.docker`

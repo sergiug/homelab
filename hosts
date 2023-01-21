@@ -1,5 +1,5 @@
 [all:vars]
-ansible_connection=ssh
+ansible_connection=paramiko
 ansible_user=sergiu
 
 [homelab]
