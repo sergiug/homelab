@@ -1,7 +1,15 @@
 ---
-- name: Ensure folder exists
+- name: Check if the folder exists
   stat:
     path: "{{ docker_dir }}/homeassistant/"
+  register: folder_data
+
+- name: Create the folder if it doesn't exist
+  file: 
+    path: "{{ docker_dir }}/homeassistant/"
+    state: directory
+    mode: 0755
+  when: not folder_data.stat.exists
 
 - name: Copy the compose file
   template:

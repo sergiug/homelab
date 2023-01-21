@@ -19,7 +19,7 @@
   register: auth_token
   when: admin_user and admin_password is defined
 
-- name: Setup application endpoins
+- name: Setup application endpoints
   include_tasks: endpoints.yaml
   when: endpoints is not none
 
