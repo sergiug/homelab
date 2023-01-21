@@ -1,6 +1,6 @@
 # ansible-homelab
 
-Ansible provisioning for a Ubuntu homelab server featuring: 
+Ansible provisioning for an Ubuntu homelab server featuring: 
 * Portainer
 * Home Assistant
 
@@ -9,7 +9,7 @@ Everything running in docker containers.
 ## Prerequisites
 ### Homelab server(s)
 * Ubuntu 22 server installed
-* SSH key imported (I personally use github import right at installation time)
+* SSH key imported (I personally use GitHub import right at installation time)
 
 ### Host machine
 We are running Ansible in a docker container, to be able to run from any host, so only prerequisite required on the host is Docker installed.
