@@ -6,11 +6,13 @@ services:
       - homelab
     ports:
       - "8123:8123"
-    # volumes:
-      # - "{{ docker_dir }}/homeassistant:/config"
+    volumes:
+      - /run/dbus:/run/dbus:ro
+      - "{{ docker_dir }}/homeassistant:/config"
     environment:
       - TZ={{ timezone }}
     restart: always
+    privileged: true
 
   mqtt:
     container_name: mqtt

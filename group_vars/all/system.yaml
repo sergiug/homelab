@@ -8,3 +8,4 @@ extra_packages:
   - python3
   - python3-pip
   - network-manager
+  - bluez
