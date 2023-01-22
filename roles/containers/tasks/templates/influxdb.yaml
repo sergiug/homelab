@@ -1,0 +1,17 @@
+version: '3.6'
+services:
+  influxdb:
+    image: influxdb
+    container_name: influxdb
+    networks:
+      - homelab
+    restart: always
+    ports:
+      - '8086:8086'
+    volumes:
+      - "{{ docker_dir }}/influxdb/data:/var/lib/influxdb2"
+      - "{{ docker_dir }}/influxdb/config:/etc/influxdb2"
+
+networks:
+  homelab:
+    external: true

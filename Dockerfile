@@ -21,6 +21,7 @@ RUN mkdir /ansible && \
 
 WORKDIR /ansible
 
-RUN ansible-galaxy collection install community.docker
+RUN ansible-galaxy collection install community.docker && \
+    ansible-galaxy collection install community.general
 
 CMD [ "ansible-playbook", "--version" ]

@@ -1,0 +1,25 @@
+version: '3.6'
+services:
+  telegraf:
+    image: telegraf
+    container_name: telegraf
+    networks:
+      - homelab
+    restart: always
+    volumes:
+      - "{{ docker_dir }}/telegraf/config:/etc/telegraf"
+      - /:/hostfs:ro
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - '8125:8125'
+    environment:
+      - HOST_ETC=/hostfs/etc
+      - HOST_PROC=/hostfs/proc
+      - HOST_SYS=/hostfs/sys
+      - HOST_VAR=/hostfs/var
+      - HOST_RUN=/hostfs/run
+      - HOST_MOUNT_PREFIX=/hostfs
+
+networks:
+  homelab:
+    external: true

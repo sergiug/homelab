@@ -1,14 +1,15 @@
+version: '3.6'
 services:
   homeassistant:
-    container_name: homeassistant
     image: homeassistant/home-assistant:stable
+    container_name: homeassistant
     networks:
       - homelab
     ports:
       - "8123:8123"
     volumes:
       - /run/dbus:/run/dbus:ro
-      - "{{ docker_dir }}/homeassistant:/config"
+      - "{{ docker_dir }}/homeassistant/config:/config"
     environment:
       - TZ={{ timezone }}
     restart: always
@@ -19,8 +20,8 @@ services:
     image: eclipse-mosquitto
     networks:
       - homelab
-    # volumes:
-      # - "{{ docker_dir }}/mosquitto:/mosquitto"
+    volumes:
+       - "{{ docker_dir }}/mosquitto:/mosquitto"
     restart: always
 
 networks:

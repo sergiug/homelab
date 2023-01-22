@@ -1,0 +1,28 @@
+---
+- name: Check if the folder exists
+  stat:
+    path: "{{ docker_dir }}/telegraf/"
+  register: folder_data
+
+- name: Create the folder if it doesn't exist
+  file:
+    path: "{{ docker_dir }}/telegraf/"
+    state: directory
+    mode: 0755
+  when: not folder_data.stat.exists
+
+- name: Copy the compose file
+  template:
+    src: templates/telegraf.yaml
+    dest: "{{ docker_dir }}/telegraf/compose.yaml"
+    mode: 0755
+
+- name: Add Telegraf user to the docker group.
+  user:
+    name: telegraf
+    groups: docker
+    append: true
+
+- name: Docker-compose up
+  community.docker.docker_compose:
+    project_src: "{{ docker_dir }}/telegraf/"

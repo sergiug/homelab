@@ -1,0 +1,22 @@
+---
+- name: Check if the folder exists
+  stat:
+    path: "{{ docker_dir }}/grafana/"
+  register: folder_data
+
+- name: Create the folder if it doesn't exist
+  file:
+    path: "{{ docker_dir }}/grafana/"
+    state: directory
+    mode: 0755
+  when: not folder_data.stat.exists
+
+- name: Copy the compose file
+  template:
+    src: templates/grafana.yaml
+    dest: "{{ docker_dir }}/grafana/compose.yaml"
+    mode: 0755
+
+- name: Docker-compose up
+  community.docker.docker_compose:
+    project_src: "{{ docker_dir }}/grafana/"

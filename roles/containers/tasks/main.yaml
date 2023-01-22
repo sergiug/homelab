@@ -5,3 +5,12 @@
 
 - name: Setup and spin up Home Assistant containers
   include_tasks: homeassistant.yaml
+
+- name: Setup and spin up InfluxDB containers
+  include_tasks: influxdb.yaml
+
+- name: Setup and spin up Grafana containers
+  include_tasks: grafana.yaml
+
+- name: Setup and spin up Telegraf containers
+  include_tasks: telegraf.yaml

@@ -1,0 +1,23 @@
+---
+- name: Check if the folder exists
+  stat:
+    path: "{{ docker_dir }}/influxdb/"
+  register: folder_data
+
+- name: Create the folder if it doesn't exist
+  file:
+    path: "{{ docker_dir }}/influxdb/"
+    state: directory
+    mode: 0755
+  when: not folder_data.stat.exists
+
+- name: Copy the compose file
+  template:
+    src: templates/influxdb.yaml
+    dest: "{{ docker_dir }}/influxdb/compose.yaml"
+    mode: 0755
+
+- name: Docker-compose up
+  community.docker.docker_compose:
+    project_src: "{{ docker_dir }}/influxdb/"
+    build: true

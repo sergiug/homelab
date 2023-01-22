@@ -2,3 +2,4 @@
 .idea
 /group_vars/all/secret.yaml
 /hosts
+/.persistent

@@ -1,19 +1,24 @@
 # ansible-homelab
+Ansible provisioning for an Ubuntu homelab server.
 
-Ansible provisioning for an Ubuntu homelab server featuring: 
+## Features
 * Portainer
 * Home Assistant
+* MQTT
+* InfluxDB
+* Telegraf
+* Grafana
 
 Everything running in docker containers.
 
+## Ansible steps
 It performs the following steps:
 * SSH security improvements
 * OS package updates and upgrades
 * OS extra package install
 * Network setup (WiFi connection setup)
 * Docker and Docker Compose install and setup
-* Portainer install and setup
-* Home Assistant install and setup
+* Installing and setting up all the apps mentioned  in section Features
 
 ## Prerequisites
 ### Homelab server(s)
@@ -27,6 +32,12 @@ The current setup assumes that the private key for accessing the homelab servers
 
 ## Configuration
 1. Rename `hosts.dist` to `hosts` and fill in with your details, server IPs, etc..
+
+## Building the Docker image
+Before the first run we need to build the Ansible docker image. 
+
+To do that run : 
+`make build`
 
 ## Running the linting tools
 `make lint`
