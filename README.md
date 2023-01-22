@@ -18,7 +18,7 @@ It performs the following steps:
 * OS extra package install
 * Network setup (WiFi connection setup)
 * Docker and Docker Compose install and setup
-* Installing and setting up all the apps mentioned  in section Features
+* Install and setup up all the apps mentioned in section Features above
 
 ## Prerequisites
 ### Homelab server(s)
